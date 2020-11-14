@@ -1,0 +1,49 @@
+BASE_TASK_CONFIG_PATH: "IL_configs/vistargetnav_gibson.yaml"
+VERSION: "medium_moree"
+TRAINER_NAME: "custom_ppo"
+ENV_NAME: "VisTargetNavEnv"
+SIMULATOR_GPU_ID: 0
+TORCH_GPU_ID: 0
+VIDEO_OPTION: ["disk", "tensorboard"]
+TEST_EPISODE_COUNT: 2184
+NUM_PROCESSES: 4
+NUM_VAL_PROCESSES: 0
+SENSORS: ["DEPTH_SENSOR", "RGB_SENSOR"]
+NUM_UPDATES: 100000000
+LOG_INTERVAL: 10
+CHECKPOINT_INTERVAL: 200
+VIS_INTERVAL: 200
+DIFFICULTY: 'medium'
+RL:
+  SUCCESS_REWARD: 10.0
+  SUCESS_MEASURE: 'SUCCESS'
+  PPO:
+    # ppo params
+    clip_param: 0.2
+    ppo_epoch: 2
+    num_mini_batch: 4
+    value_loss_coef: 0.5
+    entropy_coef: 0.1
+    lr: 0.00001
+    eps: 0.00001
+    max_grad_norm: 0.2
+    num_steps: 256
+    use_gae: True
+    gamma: 0.99
+    tau: 0.95
+    use_linear_clip_decay: True
+    use_linear_lr_decay: True
+    reward_window_size: 50
+    use_normalized_advantage: True
+
+    hidden_size: 512
+
+    pretrained_weights: localizer18_12view.pt
+    pretrained: False
+    pretrained_encoder: True
+    train_encoder: True
+    reset_critic: False
+    backbone: resnet18
+    rnn_type: LSTM
+    num_recurrent_layers: 2
+

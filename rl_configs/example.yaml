@@ -1,0 +1,52 @@
+BASE_TASK_CONFIG_PATH: "rl_configs/vistargetnav_gibson.yaml"
+TRAINER_NAME: "custom_ppo_memory"
+VERSION: '1114
+ENV_NAME: "RLEnv"
+SIMULATOR_GPU_ID: 1 # simulator gpu id (among visible gpus)
+TORCH_GPU_ID: 0 # pytorch gpu id (among visible gpus)
+VIDEO_OPTION: ["disk", "tensorboard"]
+TEST_EPISODE_COUNT: 500
+NUM_PROCESSES: 4
+NUM_VAL_PROCESSES: 0
+SENSORS: ["DEPTH_SENSOR", "RGB_SENSOR"]
+NUM_UPDATES: 100000000
+LOG_INTERVAL: 10
+CHECKPOINT_INTERVAL: 200
+VIS_INTERVAL: 200
+DIFFICULTY: 'hard'
+POLICY: 'YOUR_POLICY_NAME'
+OBS_TO_SAVE: ['rgb','depth'] # these keys will be saved in rolloutstorage.
+RL:
+  SUCCESS_REWARD: 10.0
+  SUCESS_MEASURE: 'SUCCESS'
+  SLACK_REWARD: -0.01
+  PPO:
+    # ppo params
+    clip_param: 0.2
+    ppo_epoch: 2
+    num_mini_batch: 2
+    value_loss_coef: 0.5
+    entropy_coef: 0.01
+    lr: 0.00001
+    eps: 0.00001
+    max_grad_norm: 0.2
+    num_steps: 256
+    use_gae: True
+    gamma: 0.99
+    tau: 0.95
+    use_linear_clip_decay: True
+    use_linear_lr_decay: True
+    reward_window_size: 50
+    use_normalized_advantage: True
+
+    hidden_size: 512
+
+    pretrained_weights: "path/to/pretrained_weight.pth"
+    pretrained: True # if ckpt file is RL trained # use this when you need to resume the RL code
+    il_pretrained: False # if ckpt file is IL-pretrained
+    train_encoder: True
+    reset_critic: False
+    backbone: resnet18
+    rnn_type: LSTM
+    num_recurrent_layers: 2
+
